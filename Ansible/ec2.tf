@@ -19,7 +19,7 @@ resource "aws_instance" "webservers" {
   subnet_id                   = aws_subnet.Public-Subnets[count.index].id
 
   tags = {
-    Name   = var.instance_names[count.index] - Public
+    Name   = "${var.instance_names}-[count.index]-Public"
     owner  = local.owner
     teamDL = local.teamDL
     env    = "${var.env}"
