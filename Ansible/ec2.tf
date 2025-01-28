@@ -11,7 +11,7 @@ data "aws_ami" "my_ami" {
 resource "aws_instance" "webservers" {
   # count                       = length(var.instance_names)
   count                       = var.env == "dev" ? 3 : 1 # if env is dev, create 3 instances, otherwise create 1 instance
-  ami                         = data.aws_ami.my_ami
+  ami                         = data.aws_ami.my_ami.id
   instance_type               = var.instance_type
   key_name                    = var.key_name # Replace with your key pair name
   associate_public_ip_address = true
@@ -19,7 +19,7 @@ resource "aws_instance" "webservers" {
   subnet_id                   = aws_subnet.Public-Subnets[count.index].id
 
   tags = {
-    Name   = "${var.instance_names}-[count.index]-Public"
+    Name   = "${var.env}-PublicServer-${count.index + 1}"
     owner  = local.owner
     teamDL = local.teamDL
     env    = "${var.env}"
