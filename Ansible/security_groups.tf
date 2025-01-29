@@ -4,31 +4,21 @@ resource "aws_security_group" "allow_tls_terraform" {
   description = "Security group to allow multiple ports"
   vpc_id      = aws_vpc.vpc_terraform.id
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Change this to your IP for production
-  }
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "http"
-    cidr_blocks = ["0.0.0.0/0"]  # Change this to your IP for production
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Change this to your IP for production
+  # Allowing ingress for allowed ports
+  dynamic "ingress" {
+    for_each = var.allowed_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"  # Ensure this is set to "tcp"
+      cidr_blocks = ["0.0.0.0/0"]  # Change this to your IP for production
+    }
   }
 
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1" # Allow all outbound traffic
+    protocol    = "-1"  # Allow all outbound traffic
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -36,6 +26,6 @@ resource "aws_security_group" "allow_tls_terraform" {
     Name   = "${var.env}_Sg_tf"
     owner  = local.owner
     teamDL = local.teamDL
-    env    = "${var.env}"
+    env    = var.env
   }
 }

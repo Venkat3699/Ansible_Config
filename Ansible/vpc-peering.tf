@@ -1,9 +1,9 @@
 data "aws_vpc" "ansible_vpc" {
-  id = "vpc-081b18ca31f9ebc51" # Controller VPC ID
+  id = "vpc-006b27055cd77ba00" # Controller VPC ID
 }
 
 data "aws_route_table" "ansible_vpc_rt" {
-  subnet_id = "subnet-094e40b4f4527a013" # Controller Subnet ID
+  subnet_id = "subnet-0783719d4ed315853" # Controller Subnet ID
 }
 
 resource "aws_vpc_peering_connection" "ansible_vpc_peering" {
