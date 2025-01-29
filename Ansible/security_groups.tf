@@ -1,10 +1,9 @@
 # Configuring Security Group
-resource "aws_security_group" "allow_tls-Terraform" {
+resource "aws_security_group" "allow_tls_terraform" {
   name        = "allow_multiple_ports"
   description = "Security group to allow multiple ports"
-  vpc_id      = aws_vpc.Vpc-Terraform.id # Ensure the security group is associated with the correct VPC
+  vpc_id      = aws_vpc.vpc_terraform.id
 
-  # Loop through allowed ports to create ingress rules
   dynamic "ingress" {
     for_each = var.allowed_ports
     content {
@@ -23,7 +22,7 @@ resource "aws_security_group" "allow_tls-Terraform" {
   }
 
   tags = {
-    Name   = "${var.env}_Sg-tf"
+    Name   = "${var.env}_Sg_tf"
     owner  = local.owner
     teamDL = local.teamDL
     env    = "${var.env}"

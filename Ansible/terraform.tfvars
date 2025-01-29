@@ -8,4 +8,3 @@ instance_type       = "t2.small"
 key_name            = "Ravi_Virginia"
 instance_names      = ["Jenkins", "Docker", "Kubernetes"]
 allowed_ports       = ["22", "80", "8080", "3306"]
-

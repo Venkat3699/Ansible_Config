@@ -1,10 +1,10 @@
 # Configuring VPC
-resource "aws_vpc" "Vpc-Terraform" {
+resource "aws_vpc" "vpc_terraform" {
   cidr_block         = var.vpc_cidr
   enable_dns_support = true
 
   tags = {
-    Name   = "${var.env}_VPC-tf"
+    Name   = "${var.env}_VPC_tf"
     owner  = local.owner
     teamDL = local.teamDL
     env    = "${var.env}"
@@ -12,11 +12,11 @@ resource "aws_vpc" "Vpc-Terraform" {
 }
 
 # Configuring Internet Gateway
-resource "aws_internet_gateway" "Igw-Terraform" {
-  vpc_id = aws_vpc.Vpc-Terraform.id
+resource "aws_internet_gateway" "igw_terraform" {
+  vpc_id = aws_vpc.vpc_terraform.id
 
   tags = {
-    Name   = "${var.env}_IGW-tf"
+    Name   = "${var.env}_IGW_tf"
     owner  = local.owner
     teamDL = local.teamDL
     env    = "${var.env}"
