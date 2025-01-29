@@ -30,9 +30,9 @@ resource "aws_vpc_peering_connection" "ansible-vpc-peering" {
 
 resource "aws_route" "peering-to-ansible-vpc" {
   route_table_id            = aws_route_table.Public-Rt-Terraform.id
-  destination_cidr_block    = "192.10.0.0/16" # Controller VPC CIDR
+  destination_cidr_block    = "10.0.0.0/16" # Controller VPC CIDR
   vpc_peering_connection_id = aws_vpc_peering_connection.ansible-vpc-peering.id
-  #depends_on                = [aws_route_table.terraform-public]
+  depends_on                = [aws_route_table.terraform-public]
 }
 
 resource "aws_route" "peering-from-ansible-vpc" {
