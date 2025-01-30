@@ -1,8 +1,8 @@
-resource "null_resource" "wait_for_ssh" {
+resource "null_resource" "webservers" {
   provisioner "local-exec" {
     command = <<EOT
       # Fetch instance IPs dynamically from Terraform
-      INSTANCES="${join(" ", aws_instance.example[*].public_ip)}"
+      INSTANCES="${join(" ", aws_instance.webservers[*].public_ip)}"
 
       # Check SSH connectivity for each instance
       for i in $(seq 1 30); do
