@@ -22,8 +22,14 @@ resource "null_resource" "wait_for_ssh" {
         sleep 10
       done
 
+      # Check if all instances are ready
+      if [ "$ALL_READY" = false ]; then
+        echo "Timeout waiting for SSH access. Exiting."
+        exit 1
+      fi
+
       # Run Ansible only after SSH is available
-      timeout 120 ansible -i invfile pub -m ping
+      timeout 120 ansible -i invfile pub -m ping -vvv
     EOT
   }
   depends_on = [local_file.ansible_inventory_file]
